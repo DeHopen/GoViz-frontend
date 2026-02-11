@@ -1,0 +1,309 @@
+@use 'variables' as *;
+
+// ═══ Страница ════════════════════════════════════════════════════
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--color-bg);
+  position: relative;
+
+  &:fullscreen {
+    background: var(--color-bg);
+  }
+}
+
+// ═══ Тулбар ══════════════════════════════════════════════════════
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  z-index: 10;
+  min-height: 40px;
+}
+
+// ─── Группа кнопок ────────────────────────────────────────────
+.group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+// ─── Разделитель ──────────────────────────────────────────────
+.sep {
+  width: 1px;
+  height: 20px;
+  background: var(--color-border);
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+
+// ─── Кнопка тулбара ──────────────────────────────────────────
+.toolbarBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--color-bg-tertiary);
+    color: var(--color-text);
+    border-color: var(--color-border);
+  }
+
+  &.active {
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+    border-color: transparent;
+  }
+
+  &.danger {
+    &:hover {
+      color: var(--color-error);
+      background: var(--color-error-bg);
+      border-color: transparent;
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// ─── Имя файла ──────────────────────────────────────────────
+.fileName {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 240px;
+  margin: 0 2px;
+}
+
+// ─── Бейдж стиля ────────────────────────────────────────────
+.badge {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+// ─── Дата ───────────────────────────────────────────────────
+.meta {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+// ─── Размер шрифта ──────────────────────────────────────────
+.fontLabel {
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+  min-width: 20px;
+  text-align: center;
+  user-select: none;
+}
+
+// ─── Спейсер ────────────────────────────────────────────────
+.spacer {
+  flex: 1;
+}
+
+// ═══ Поиск ═══════════════════════════════════════════════════════
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: searchSlideIn 0.2s ease;
+}
+
+@keyframes searchSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.searchInput {
+  width: 180px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 0.78rem;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  &:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-light);
+  }
+}
+
+.searchCount {
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+// ═══ iframe ══════════════════════════════════════════════════════
+.iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  min-height: 0;
+}
+
+// ═══ Toast ═══════════════════════════════════════════════════════
+.toast {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: var(--color-bg-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 8px 20px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  white-space: nowrap;
+
+  &.toastVisible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+// ═══ Центрированный контент (лоадеры, ошибки) ════════════════════
+.center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.centerActions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+
+  &:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  &.danger {
+    border-color: var(--color-error);
+    color: var(--color-error);
+
+    &:hover {
+      background: var(--color-error-bg);
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// ═══ Responsive ══════════════════════════════════════════════════
+@include mobile {
+  .toolbar {
+    padding: 4px 6px;
+    gap: 3px;
+    flex-wrap: wrap;
+  }
+
+  .fileName {
+    max-width: 120px;
+    font-size: 0.78rem;
+  }
+
+  .badge,
+  .meta,
+  .fontLabel {
+    display: none;
+  }
+
+  .sep {
+    display: none;
+  }
+
+  .searchInput {
+    width: 120px;
+  }
+}
+
+@include tablet {
+  .meta {
+    display: none;
+  }
+}

@@ -1,0 +1,136 @@
+@use 'variables' as *;
+
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  padding: 80px 0 60px;
+  text-align: center;
+
+  @include mobile {
+    padding: 48px 0 36px;
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--color-text);
+  margin-bottom: 16px;
+
+  .highlight {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @include mobile {
+    font-size: 2rem;
+  }
+}
+
+.description {
+  max-width: 600px;
+  margin: 0 auto 48px;
+  font-size: 1.12rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+
+  @include mobile {
+    font-size: 1rem;
+    margin-bottom: 32px;
+  }
+}
+
+.uploadSection {
+  padding: 0 0 80px;
+
+  @include mobile {
+    padding-bottom: 48px;
+  }
+}
+
+.features {
+  padding: 60px 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.featuresTitle {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: var(--color-text);
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.featureCard {
+  padding: 28px;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition);
+
+  &:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+.featureIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+
+.featureTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.featureDescription {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}

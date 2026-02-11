@@ -1,0 +1,75 @@
+@use 'variables' as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--color-border);
+  backdrop-filter: blur(12px);
+  background-color: rgba(var(--color-bg-secondary), 0.85);
+  transition: background-color var(--transition), border-color var(--transition);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color var(--transition);
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+.logoIcon {
+  color: var(--color-primary);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @include mobile {
+    gap: 4px;
+  }
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: all var(--transition);
+
+  &:hover {
+    color: var(--color-text);
+    background-color: var(--color-bg-tertiary);
+  }
+
+  &Active {
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+  }
+
+  @include mobile {
+    padding: 8px 10px;
+    font-size: 0.82rem;
+  }
+}

@@ -1,0 +1,217 @@
+@use 'variables' as *;
+
+.wrapper {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.dropzone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 32px;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-secondary);
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: center;
+
+  &:hover,
+  &.active {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-light);
+  }
+
+  @include mobile {
+    padding: 32px 20px;
+  }
+}
+
+.icon {
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Анимация вращения для loader-иконки
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.input {
+  display: none;
+}
+
+.fileInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 12px 16px;
+  background-color: var(--color-bg-tertiary);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+
+  .fileName {
+    flex: 1;
+    font-weight: 500;
+    color: var(--color-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fileSize {
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  .removeBtn {
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    font-size: 1.2rem;
+    padding: 4px;
+    cursor: pointer;
+    transition: color var(--transition);
+
+    &:hover {
+      color: var(--color-error);
+    }
+  }
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fieldLabel {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.fieldInput,
+.fieldSelect {
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color var(--transition);
+  outline: none;
+
+  &:focus {
+    border-color: var(--color-primary);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.fieldSelect {
+  cursor: pointer;
+  appearance: auto;
+}
+
+.progressBar {
+  margin-top: 16px;
+  width: 100%;
+  height: 6px;
+  background-color: var(--color-bg-tertiary);
+  border-radius: 3px;
+  overflow: hidden;
+
+  .progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+}
+
+.progressText {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.uploadBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px 24px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.constraints {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+}
