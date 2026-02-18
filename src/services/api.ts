@@ -34,12 +34,11 @@ export const filesApi = createApi({
 
     // POST /files — загрузка файла (XHR для прогресса)
     uploadFile: builder.mutation<GoFile, UploadParams>({
-      queryFn: ({ file, style, onProgress }) => {
+      queryFn: ({ file, onProgress }) => {
         return new Promise((resolve) => {
           const xhr = new XMLHttpRequest();
           const formData = new FormData();
           formData.append('file', file);
-          if (style) formData.append('style', style);
 
           xhr.upload.addEventListener('progress', (event) => {
             if (event.lengthComputable && onProgress) {

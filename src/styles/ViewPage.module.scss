@@ -105,19 +105,6 @@
   margin: 0 2px;
 }
 
-// ─── Бейдж стиля ────────────────────────────────────────────
-.badge {
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: var(--color-primary-light);
-  color: var(--color-primary);
-  white-space: nowrap;
-}
-
 // ─── Дата ───────────────────────────────────────────────────
 .meta {
   font-size: 0.7rem;
@@ -287,7 +274,6 @@
     font-size: 0.78rem;
   }
 
-  .badge,
   .meta,
   .fontLabel {
     display: none;

@@ -247,7 +247,7 @@ export default function ViewPage() {
 
   // ── Toast уведомление ─────────────────────────────────────────
   const [toast, setToast] = useState<string | null>(null);
-  const toastTimer = useRef<ReturnType<typeof setTimeout>>();
+  const toastTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   // ── Поиск ─────────────────────────────────────────────────────
   const [searchOpen, setSearchOpen] = useState(false);
@@ -299,9 +299,9 @@ export default function ViewPage() {
       <script>
         (function() {
           // ── Автооткрытие первого файла ──
-          var _orig = window.openDefaultFile;
+          const _orig = window.openDefaultFile;
           window.openDefaultFile = function() {
-            var keys = Object.keys(typeof files !== 'undefined' ? files : {});
+            const keys = Object.keys(typeof files !== 'undefined' ? files : {});
             if (keys.length > 0) {
               window.location.hash = '#file:' + keys[0];
             } else if (_orig) {
@@ -312,7 +312,7 @@ export default function ViewPage() {
           // ── Scope toggle: отслеживание состояния (шеврон рендерится через CSS) ──
           // Event delegation — мгновенная реакция на клик без привязки к каждому элементу
           document.addEventListener('click', function(e) {
-            var el = e.target;
+            let el = e.target;
             while (el && el !== document.body) {
               if (el.classList && el.classList.contains('scope-toggle')) {
                 el.classList.toggle('goviz-collapsed');
@@ -324,11 +324,11 @@ export default function ViewPage() {
 
           // Синхронизация expand/collapse all
           function bindExpandCollapse() {
-            var exp = document.getElementById('scopes-expand');
-            var col = document.getElementById('scopes-collapse');
+            const exp = document.getElementById('scopes-expand');
+            const col = document.getElementById('scopes-collapse');
 
-            if (exp && !exp._goviz) {
-              exp._goviz = true;
+            if (exp && !exp.dataset.goviz) {
+              exp.dataset.goviz = 'true';
               exp.addEventListener('click', function() {
                 document.querySelectorAll('.scope-toggle.goviz-collapsed').forEach(function(t) {
                   t.classList.remove('goviz-collapsed');
@@ -336,8 +336,8 @@ export default function ViewPage() {
               });
             }
 
-            if (col && !col._goviz) {
-              col._goviz = true;
+            if (col && !col.dataset.goviz) {
+              col.dataset.goviz = 'true';
               col.addEventListener('click', function() {
                 document.querySelectorAll('.scope-toggle').forEach(function(t) {
                   t.classList.add('goviz-collapsed');
@@ -353,8 +353,8 @@ export default function ViewPage() {
 
           // ── Проброс горячих клавиш в parent ──
           document.addEventListener('keydown', function(e) {
-            var mod = e.ctrlKey || e.metaKey;
-            var relay = false;
+            const mod = e.ctrlKey || e.metaKey;
+            let relay = false;
 
             if (mod && (e.key === '=' || e.key === '+' || e.key === '-' || e.key === '0' || e.key === 'f')) relay = true;
             if (e.key === 'F11' || e.key === 'Escape') relay = true;
@@ -402,9 +402,9 @@ export default function ViewPage() {
   // ── Fullscreen ────────────────────────────────────────────────
   const toggleFullscreen = useCallback(() => {
     if (!document.fullscreenElement) {
-      pageRef.current?.requestFullscreen();
+      void pageRef.current?.requestFullscreen();
     } else {
-      document.exitFullscreen();
+      void document.exitFullscreen();
     }
   }, []);
 
@@ -422,6 +422,13 @@ export default function ViewPage() {
     btn?.click();
   }, []);
 
+  // ── Toast ─────────────────────────────────────────────────────
+  const showToast = useCallback((msg: string) => {
+    setToast(msg);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(null), 2500);
+  }, []);
+
   // ── Копировать код ────────────────────────────────────────────
   const copyCode = useCallback(async () => {
     try {
@@ -436,7 +443,7 @@ export default function ViewPage() {
     } catch {
       showToast('Не удалось скопировать');
     }
-  }, []);
+  }, [showToast]);
 
   // ── Поиск по коду ────────────────────────────────────────────
   const clearHighlights = useCallback(() => {
@@ -529,13 +536,6 @@ export default function ViewPage() {
       return !prev;
     });
   }, [clearHighlights]);
-
-  // ── Toast ─────────────────────────────────────────────────────
-  const showToast = (msg: string) => {
-    setToast(msg);
-    if (toastTimer.current) clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(() => setToast(null), 2500);
-  };
 
   // ── Горячие клавиши ───────────────────────────────────────────
   useEffect(() => {
@@ -725,7 +725,6 @@ export default function ViewPage() {
         <div className={styles.sep} />
 
         <span className={styles.fileName}>{file.filename}</span>
-        <span className={styles.badge}>{file.style}</span>
         <span className={styles.meta}>{formatDate(file.created_at)}</span>
 
         <div className={styles.spacer} />

@@ -3,7 +3,7 @@ import { useUploadFileMutation } from '../services/api';
 import type { GoFile } from '../types';
 
 interface UseFileUploadReturn {
-  upload: (file: File, style?: string) => Promise<GoFile | null>;
+  upload: (file: File) => Promise<GoFile | null>;
   progress: number;
   isUploading: boolean;
   error: string | null;
@@ -24,7 +24,7 @@ export function useFileUpload(): UseFileUploadReturn {
   }, []);
 
   const upload = useCallback(
-    async (file: File, style?: string): Promise<GoFile | null> => {
+    async (file: File): Promise<GoFile | null> => {
       setError(null);
       setProgress(0);
 
@@ -46,7 +46,6 @@ export function useFileUpload(): UseFileUploadReturn {
       try {
         const result = await uploadFile({
           file,
-          style: style || undefined,
           onProgress: setProgress,
         }).unwrap();
 

@@ -5,17 +5,8 @@ import Icon from '../Icon/Icon';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import styles from '../../styles/FileUpload.module.scss';
 
-const STYLE_OPTIONS = [
-  { value: 'solarized-light', label: 'Solarized Light' },
-  { value: 'solarized-dark', label: 'Solarized Dark' },
-  { value: 'monokai', label: 'Monokai' },
-  { value: 'github', label: 'GitHub' },
-  { value: 'dracula', label: 'Dracula' },
-];
-
 export default function FileUpload() {
   const [file, setFile] = useState<File | null>(null);
-  const [style, setStyle] = useState('solarized-light');
   const [isDragActive, setIsDragActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -59,7 +50,7 @@ export default function FileUpload() {
 
   const handleUpload = async () => {
     if (!file) return;
-    const result = await upload(file, style);
+    const result = await upload(file);
     if (result) {
       navigate(`/files/${result.id}`);
     }
@@ -103,45 +94,22 @@ export default function FileUpload() {
       </div>
 
       {file && (
-        <>
-          <div className={styles.fileInfo}>
-            <Icon name="file-text" size={18} />
-            <span className={styles.fileName}>{file.name}</span>
-            <span className={styles.fileSize}>{formatSize(file.size)}</span>
-            {!isUploading && (
-              <button
-                className={styles.removeBtn}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeFile();
-                }}
-              >
-                <Icon name="x" size={16} />
-              </button>
-            )}
-          </div>
-
-          <div className={styles.fields}>
-            <div className={styles.field}>
-              <label className={styles.fieldLabel} htmlFor="file-style">
-                Стиль визуализации
-              </label>
-              <select
-                id="file-style"
-                className={styles.fieldSelect}
-                value={style}
-                onChange={(e) => setStyle(e.target.value)}
-                disabled={isUploading}
-              >
-                {STYLE_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </>
+        <div className={styles.fileInfo}>
+          <Icon name="file-text" size={18} />
+          <span className={styles.fileName}>{file.name}</span>
+          <span className={styles.fileSize}>{formatSize(file.size)}</span>
+          {!isUploading && (
+            <button
+              className={styles.removeBtn}
+              onClick={(e) => {
+                e.stopPropagation();
+                removeFile();
+              }}
+            >
+              <Icon name="x" size={16} />
+            </button>
+          )}
+        </div>
       )}
 
       {isUploading && (
